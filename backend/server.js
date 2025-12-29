@@ -1,8 +1,12 @@
 require("dotenv/config");
 const express = require("express");
-const app = express();
+const connectDB = require("./config/dbConfig");
 
-const { PORT } = process.env;
+const app = express();
+const { PORT, DB_URL } = process.env;
+
+// Establishing the Database Connection
+connectDB(DB_URL);
 
 app.get("/", (req, res) => {
   res.json({
