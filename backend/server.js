@@ -24,12 +24,13 @@ const { PORT, DB_URL } = process.env;
 connectDB(DB_URL);
 
 // Endpoints
-
 const authRouter = require("./routes/authRoutes");
 const adminRouter = require("./routes/adminRoutes");
+const userRouter = require("./routes/userRoutes");
 
 app.use("/api/auth", authRouter);
 app.use("/api/admin/users", adminRouter);
+app.use("/api/users", userRouter);
 
 app.get("/", (req, res) => {
   res.json({

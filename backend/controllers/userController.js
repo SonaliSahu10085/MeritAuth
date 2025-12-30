@@ -117,3 +117,45 @@ exports.logout = (req, res) => {
 exports.myProfile = async (req, res) => {
   res.json(req.user);
 };
+
+// USER - CHANGE PASSWORD
+exports.changePassword = async (req, res) => {
+  try {
+    const { oldPassword, newPassword } = req.body;
+
+    const user = await User.findOne({ userId: req.user.userId });
+
+    const isMatch = await bcrypt.compare(oldPassword, user.password);
+
+    if (!isMatch) {
+      return res.status(400).json({ error: "Password didn't match" });
+    }
+
+    user.password = newPassword;
+
+    // pre-save mongoose middleware will hash it automatically
+    await user.save();
+
+    res.json({
+      message: "Password changed successfully",
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// USER - UPDATE PROFILE
+exports.updateProfile = async (req, res) => {
+  try {
+    const { fullName } = req.body;
+    const updatedUser = await User.findOneAndUpdate(
+      { userId: req.user.userId, email: req.user.email },
+      { fullName },
+      { new: true }
+    ).select("-password");
+
+    res.json({ message: "Profile updated", user: updatedUser });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
