@@ -152,7 +152,7 @@ http://localhost:5173
 
 - **Frontend:** https://meritauth.vercel.app
 - **Backend API:** https://meritauth.onrender.com
-- **API Documentation:** [Postman API Docs](https://www.postman.com/rablo-backend-api-team/workspace/meritauth-api-documentation/request/40074400-b1a42443-0d8e-4e04-bd4d-151f43a124be?action=share&creator=40074400&ctx=documentation&active-environment=40074400-9af01313-de51-4069-8e02-a8bac66adb4f)
+- **API Documentation:** https://documenter.getpostman.com/view/40074400/2sBXVbJDtt
 
 ---
 
