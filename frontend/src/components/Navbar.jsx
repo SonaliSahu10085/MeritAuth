@@ -58,8 +58,8 @@ export default function Navbar({ user, setUser }) {
             </div>
           </div>
         ) : (
-          <Link to="/login" className="btn btn-primary btn-sm">
-            Login
+          <Link to="/signup" className="btn btn-primary btn-sm">
+            Signup
           </Link>
         )}
       </div>

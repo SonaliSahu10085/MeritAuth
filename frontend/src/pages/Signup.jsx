@@ -64,7 +64,7 @@ export default function Signup({ notify }) {
         }),
       });
 
-    //   console.log(response);
+      //   console.log(response);
 
       const data = await response.json();
       if (!response.ok) throw new Error(data.message || "Signup failed");
@@ -93,7 +93,7 @@ export default function Signup({ notify }) {
   );
 
   return (
-    <div className="min-h-[90vh] flex items-center justify-center p-4">
+    <div className="flex items-center justify-center">
       <div className="card w-full max-w-md shadow-2xl bg-base-100 border border-base-300">
         <form className="card-body" onSubmit={handleSignup}>
           <h2 className="text-2xl font-bold text-center text-primary">
@@ -105,12 +105,14 @@ export default function Signup({ notify }) {
           )}
 
           <div className="form-control">
-            <label className="label">
+            <label className="label my-4">
               <span className="label-text font-bold">Full Name</span>
             </label>
+            <br />
             <input
               type="text"
-              className="input input-bordered"
+              className="input input-bordered w-full"
+              placeholder="Jhon Doe"
               required
               onChange={(e) =>
                 setFormData({ ...formData, name: e.target.value })
@@ -119,12 +121,14 @@ export default function Signup({ notify }) {
           </div>
 
           <div className="form-control">
-            <label className="label">
+            <label className="label my-4">
               <span className="label-text font-bold">Email</span>
             </label>
+            <br />
             <input
               type="email"
-              className="input input-bordered"
+              className="input input-bordered w-full"
+              placeholder="email@example.com"
               required
               onChange={(e) =>
                 setFormData({ ...formData, email: e.target.value })
@@ -133,13 +137,14 @@ export default function Signup({ notify }) {
           </div>
 
           <div className="form-control">
-            <label className="label">
+            <label className="label my-4">
               <span className="label-text font-bold">Password</span>
             </label>
+            <br />
             <input
               type="password"
               placeholder="••••••••"
-              className="input input-bordered"
+              className="input input-bordered w-full"
               required
               onChange={(e) =>
                 setFormData({ ...formData, password: e.target.value })
@@ -157,13 +162,14 @@ export default function Signup({ notify }) {
           </div>
 
           <div className="form-control">
-            <label className="label">
+            <label className="label my-4">
               <span className="label-text font-bold">Confirm Password</span>
             </label>
+            <br />
             <input
               type="password"
               placeholder="••••••••"
-              className="input input-bordered"
+              className="input input-bordered w-full"
               required
               onChange={(e) =>
                 setFormData({ ...formData, confirmPassword: e.target.value })

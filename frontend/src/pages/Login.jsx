@@ -53,8 +53,9 @@ export default function Login({ setUser, notify }) {
     }
   };
 
+  // COMPONENT 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center p-4">
+    <div className="flex items-center justify-center">
       <div className="card w-full max-w-md shadow-2xl bg-base-100 border border-base-300">
         <form className="card-body" onSubmit={handleLogin}>
           <h2 className="text-2xl text-primary font-bold mb-4 text-center">
@@ -82,36 +83,38 @@ export default function Login({ setUser, notify }) {
           )}
 
           <div className="form-control">
-            <label className="label">
+            <label className="label my-4">
               <span className="label-text font-bold">Email Address</span>
             </label>
+            <br/>
             <input
               type="email"
               placeholder="email@example.com"
-              className="input input-bordered focus:input-primary"
+              className="input input-bordered focus:input-white w-full"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
 
-          <div className="form-control mt-2">
-            <label className="label">
+          <div className="form-control">
+            <label className="label my-4">
               <span className="label-text font-bold">Password</span>
             </label>
+            <br/>
             <input
               type="password"
               placeholder="••••••••"
-              className="input input-bordered focus:input-primary"
+              className="input input-bordered focus:input-white w-full"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 
-          <div className="form-control mt-8">
+          <div className="form-control mt-4">
             <button
-              className={`btn btn-primary ${loading ? "loading" : ""}`}
+              className={`btn btn-primary w-full ${loading ? "loading" : ""}`}
               disabled={loading}
             >
               {loading ? "Authenticating..." : "Login"}
