@@ -2,13 +2,22 @@ const User = require("../models/UserModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-module.exports.signup = async (req, res) => {
+const generateToken = (userId, role) => {
+  return jwt.sign(
+    { userId: newUser._id, role: newUser.role },
+    process.env.JWT_SECRET,
+    { expiresIn: "1d" }
+  );
+};
+
+// SIGNUP
+exports.signup = async (req, res) => {
   try {
     const { email, password, fullName } = req.body;
 
     if (!email || !fullName || !password) {
       res.status(400).json({
-        error: "Missing Required Fields",
+        error: "All fields required",
       });
     }
 
@@ -40,18 +49,15 @@ module.exports.signup = async (req, res) => {
     await newUser.save();
 
     // Create auth token
-    const token = jwt.sign(
-      { userId: newUser._id, role: newUser.role },
-      process.env.JWT_SECRET,
-      { expiresIn: "7d" }
-    );
+    const token = generateToken(newUser.userId, newUser.role);
 
     res.json({
-      message: "User signed up successfully",
+      message: "Signup successful",
       token,
       user: {
-        fullName,
-        email,
+        userId: newUser.userId,
+        fullName: newUser.fullName,
+        email: newUser.email,
       },
     });
   } catch (err) {
@@ -59,7 +65,8 @@ module.exports.signup = async (req, res) => {
   }
 };
 
-module.exports.login = async (req, res) => {
+// LOGIN
+exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -80,19 +87,17 @@ module.exports.login = async (req, res) => {
       return res.status(400).json({ error: "Invalid Credentials" });
     }
 
-    const token = jwt.sign(
-      { userId: user._id, role: user.role },
-      process.env.JWT_SECRET,
-      { expiresIn: "7d" }
-    );
+    // JWT Access Token
+    const token = generateToken(user.userId, user.role);
 
     user.lastLoginAt = new Date();
     await user.save();
 
     res.json({
-      message: "Login successfully",
+      message: "Login successful",
       token,
       user: {
+        userId: user.userId,
         fullName: user.fullName,
         email: user.email,
       },
@@ -102,20 +107,13 @@ module.exports.login = async (req, res) => {
   }
 };
 
-module.exports.logout = (req, res) => {
+//LOGOUT
+exports.logout = (req, res) => {
   // For JWT, logout is handled on client-side by removing token
-  res.json({ message: "Logged out successfully" });
+  res.json({ message: "Logout successful" });
 };
 
-module.exports.getCurrUser = async (req, res) => {
-  try {
-    const user = await User.findOne({ email: req.user.email }).select(
-      "-password"
-    );
-    res.json({ user });
-  } catch (err) {
-    res.status(500).json({
-      error: err.message,
-    });
-  }
+// GET CURRENT USER + GET MY PROFILE
+exports.myProfile = async (req, res) => {
+  res.json(req.user);
 };
