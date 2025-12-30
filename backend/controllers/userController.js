@@ -157,10 +157,11 @@ exports.changePassword = async (req, res) => {
 // USER - UPDATE PROFILE
 exports.updateProfile = async (req, res) => {
   try {
-    const { fullName } = req.body;
+    const { fullName, email } = req.body;
+
     const updatedUser = await User.findOneAndUpdate(
       { userId: req.user.userId, email: req.user.email },
-      { fullName },
+      { fullName, email },
       { new: true }
     ).select("-password");
 
