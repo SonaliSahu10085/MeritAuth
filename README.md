@@ -1,7 +1,5 @@
 # MeritAuth – Mini User Management System
 
----
-
 ## 📌 Project Overview & Purpose
 
 **MeritAuth** is a full-stack **Mini User Management System** designed to manage users with **role-based access control (RBAC)**.
@@ -15,6 +13,13 @@ This project was built as part of the **Backend Developer Intern Assessment for 
 - Role-based permissions
 - Clean backend architecture
 - Real-world admin & user scenarios
+- JWT-based authentication
+- Secure password hashing using bcrypt
+- Role-based access:
+    - **Admin:** Manage all users and their account status
+    - **User:** Manage own profile only
+- Protected routes for authenticated users
+- Admin-only access to admin dashboard
 
 ---
 
@@ -33,7 +38,7 @@ This project was built as part of the **Backend Developer Intern Assessment for 
 - React.js (Hooks)
 - Daisy UI
 - Tailwind CSS
-- Axios
+- Fetch
 - React Router
 
 ### Deployment
@@ -47,33 +52,6 @@ This project was built as part of the **Backend Developer Intern Assessment for 
 - Postman (API testing)
 - Git & GitHub
 - dotenv (Environment variables)
-
----
-
-## 📂 Project Structure
-
-```
-root/
-│
-├── backend/
-│   ├── controllers/
-│   ├── routes/
-│   ├── models/
-│   ├── middlewares/
-│   ├── config/
-│   ├── tests/
-│   └── server.js
-│
-├── frontend/
-│   ├── src/
-│   ├── components/
-│   ├── pages/
-│   ├── services/
-│   └── App.jsx
-│
-└── README.md
-
-```
 
 ---
 
@@ -92,30 +70,28 @@ root/
 ```bash
 cd backend
 npm install
-
 ```
 
 Create a `.env` file inside `/backend`:
 
 ```
-PORT=
-MONGO_URI=
+NODE_ENV=development
+PORT=3434
+DB_URL=
 JWT_SECRET=
-JWT_EXPIRES_IN=
-
+BACKEND_ORIGIN_URL=
 ```
 
 Run backend server:
 
 ```bash
-npm run dev
+npm run server
 ```
 
 Backend will run on:
 
 ```
-http://localhost:5000
-
+http://localhost:3434
 ```
 
 ---
@@ -126,14 +102,12 @@ http://localhost:5000
 cd frontend
 npm install
 npm run dev
-
 ```
 
 Frontend will run on:
 
 ```
 http://localhost:5173
-
 ```
 
 ---
@@ -142,53 +116,43 @@ http://localhost:5173
 
 ### Backend (.env)
 
+- `NODE_ENV`
 - `PORT`
-- `MONGO_URI`
+- `DB_URL`
 - `JWT_SECRET`
-- `JWT_EXPIRES_IN`
+- `BACKEND_ORIGIN_URL`
 
-⚠️ **Note:**
+### Frontend (.env)
 
-All environment files are excluded using `.gitignore`.
+- `VITE_API_URL`
 
 ---
 
-## 🚀 Deployment Instructions
+## 🌐 Deployment Instructions
 
 ### Backend Deployment (Render)
 
-1. Push backend code to GitHub
-2. Create a new Web Service on Render
-3. Add environment variables
-4. Deploy
+1. Push backend code to GitHub.
+2. Create a new Web Service on Render.
+3. Select the `/backend` folder.
+4. Set the build command (e.g., `npm install`) and server running command (`npm start`).
+5. Add your environment variables in the Environment tab.
+6. Deploy.
 
 ### Frontend Deployment (Vercel)
 
-1. Import GitHub repository
-2. Select `/frontend` folder
-3. Build & deploy
-
+1. Import your GitHub repository into Vercel.
+2. Select the `/frontend` folder as the root.
+3. Vercel will automatically detect the Vite build settings.
+4. Add `VITE_API_URL` to the Environment Variables settings.
+5. Build & deploy.
 ---
 
 ## 🌐 Live Deployment Links
 
-- **Frontend:** https://your-frontend-url.vercel.app
-- **Backend API:** https://your-backend-url.onrender.com
-- **API Documentation:** Postman Collection / Swagger Link
-
-*(Replace with actual links before submission)*
-
----
-
-## 🔑 Authentication & Authorization
-
-- JWT-based authentication
-- Secure password hashing using bcrypt
-- Role-based access:
-    - **Admin:** Manage all users
-    - **User:** Manage own profile only
-- Protected routes for authenticated users
-- Admin-only access to admin dashboard
+- **Frontend:** https://meritauth.vercel.app
+- **Backend API:** https://meritauth.onrender.com
+- **API Documentation:** [Postman API Docs](https://www.postman.com/rablo-backend-api-team/workspace/meritauth-api-documentation/request/40074400-b1a42443-0d8e-4e04-bd4d-151f43a124be?action=share&creator=40074400&ctx=documentation&active-environment=40074400-9af01313-de51-4069-8e02-a8bac66adb4f)
 
 ---
 
@@ -200,7 +164,6 @@ All environment files are excluded using `.gitignore`.
 
 ```
 POST /api/auth/signup
-
 ```
 
 **Request Body**
@@ -211,17 +174,17 @@ POST /api/auth/signup
   "email": "sonali@example.com",
   "password": "StrongPass@123"
 }
-
 ```
 
 **Response**
 
 ```json
 {
-  "success": true,
-  "token": "jwt_token_here"
+  "token": "jwt_token_here",
+  "user": {
+  "key": "value"
+  }
 }
-
 ```
 
 ---
@@ -230,7 +193,6 @@ POST /api/auth/signup
 
 ```
 POST /api/auth/login
-
 ```
 
 ---
@@ -289,4 +251,6 @@ Backend Developer Intern Applicant
 
 📧 Email: sonali@example.com
 
-🔗 GitHub: https://github.com/your-github
+🔗 GitHub: https://github.com/SonaliSahu10085
+
+🔗 Linkedin: https://linkedin.com/in/sonalisahu246
