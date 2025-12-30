@@ -9,6 +9,6 @@ router.post("/login", userController.login);
 
 router.get("/logout", userController.logout);
 
-router.get('/currentUser', userController.getCurrUser);
+router.get('/myProfile', userController.myProfile);
 
 module.exports = router;
