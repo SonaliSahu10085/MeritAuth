@@ -1,52 +1,57 @@
 require("dotenv/config");
 const express = require("express");
-const connectDB = require("./config/dbConfig");
 const cors = require("cors");
 const morgan = require("morgan");
 
-const app = express();
+const connectDB = require("./config/dbConfig");
+// const job = require("./utils/cron");
 
-// Common Middlewares Setup
-const corsOptions = {
-  origin: ["http://localhost:5173"], // frontend URL
-  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-  credentials: true, // allow cookies / auth headers
-};
-
-app.use(express.json());
-app.use(morgan("dev"));
-app.use(cors(corsOptions));
-
-// Accessing environmental variables
-const { PORT, DB_URL } = process.env;
-
-// Establishing the Database Connection
-connectDB(DB_URL);
-
-// Endpoints
 const authRouter = require("./routes/authRoutes");
 const adminRouter = require("./routes/adminRoutes");
 const userRouter = require("./routes/userRoutes");
 
+const app = express();
+
+/* -------------------- MIDDLEWARES -------------------- */
+const corsOptions = {
+  origin: ["http://localhost:5173"],
+  methods: ["GET", "POST", "DELETE", "PATCH"],
+  credentials: true,
+};
+
+app.use(express.json({ limit: "10mb" }));
+app.use(morgan("dev"));
+app.use(cors(corsOptions));
+
+/* -------------------- ENV VARIABLES -------------------- */
+const PORT = process.env.PORT || 3000;
+const DB_URL = process.env.DB_URL;
+
+/* -------------------- DATABASE -------------------- */
+connectDB(DB_URL);
+
+/* -------------------- CRON JOB -------------------- */
+// job.start();
+
+/* -------------------- ROUTES -------------------- */
 app.get("/", (req, res) => {
   res.json({
-    message: `Server is running on port ${PORT || 3000}`,
+    message: `Server is running on port ${PORT}`,
   });
 });
-
 
 app.use("/api/auth", authRouter);
 app.use("/api/admin/users", adminRouter);
 app.use("/api/users", userRouter);
 
-// 404 middleware
+/* -------------------- 404 HANDLER -------------------- */
 app.use((req, res) => {
   res.status(404).json({
-    error: "Endpoint not exists",
+    error: "Endpoint does not exist",
   });
 });
 
-
-app.listen(3434, () =>
-  console.log(`Server is running on port ${PORT || 3000}`)
-);
+/* -------------------- SERVER -------------------- */
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
