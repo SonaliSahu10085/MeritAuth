@@ -2,13 +2,11 @@ const User = require("../models/UserModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const generateToken = (userId, role) => {
-  return jwt.sign(
-    { userId: newUser._id, role: newUser.role },
-    process.env.JWT_SECRET,
-    { expiresIn: "1d" }
-  );
-};
+const {
+  generateToken,
+  isStrongPassword,
+  emailValidation,
+} = require("../utils/utilityFunctions");
 
 // SIGNUP
 exports.signup = async (req, res) => {
@@ -22,14 +20,18 @@ exports.signup = async (req, res) => {
     }
 
     // Email format validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
+    if (!emailValidation(email)) {
       return res.status(400).json({ error: "Invalid email format" });
     }
 
     // Password strength validation
-    if (password.length < 6) {
-      return res.status(400).json({ error: "Password too weak" });
+    if (!isStrongPassword(password)) {
+      return res
+        .status(400)
+        .json({
+          error:
+            "Password must be at least 6 characters and include uppercase, lowercase, number, and special character",
+        });
     }
 
     const existingUser = await User.findOne({ email });
