@@ -11,7 +11,7 @@ exports.viewAllUsers = async (req, res) => {
       .limit(limit)
       .select("-password");
 
-    const totalUsers = users.length;
+    const totalUsers = await User.countDocuments({ role: "user" });
 
     res.json({
       users,
