@@ -1,7 +1,7 @@
 const cron = require("cron");
 const https = require("https");
 
-module.exports.job = new cron.CronJob("*/14 * * * *", function () {
+const job = new cron.CronJob("*/14 * * * *", function () {
   https
     .get(process.env.BACKEND_ORIGIN_URL, (res) => {
       if (res.statusCode === 200) console.log("GET request sent successfully");
@@ -9,6 +9,8 @@ module.exports.job = new cron.CronJob("*/14 * * * *", function () {
     })
     .on("error", (e) => console.error("Error while sending request", e));
 });
+
+module.exports = job;
 
 
 // CRON JOB EXPLANATION:
