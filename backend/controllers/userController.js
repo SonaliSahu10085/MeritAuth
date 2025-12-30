@@ -1,6 +1,5 @@
 const User = require("../models/UserModel");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 
 const {
   generateToken,
@@ -14,7 +13,7 @@ exports.signup = async (req, res) => {
     const { email, password, fullName } = req.body;
 
     if (!email || !fullName || !password) {
-      res.status(400).json({
+      return res.status(400).json({
         error: "All fields required",
       });
     }
@@ -26,17 +25,15 @@ exports.signup = async (req, res) => {
 
     // Password strength validation
     if (!isStrongPassword(password)) {
-      return res
-        .status(400)
-        .json({
-          error:
-            "Password must be at least 6 characters and include uppercase, lowercase, number, and special character",
-        });
+      return res.status(400).json({
+        error:
+          "Password must be at least 6 characters and include uppercase, lowercase, number, and special character",
+      });
     }
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      res.status(400).json({
+      return res.status(400).json({
         error: "User already exists",
       });
     }
@@ -48,18 +45,21 @@ exports.signup = async (req, res) => {
       password,
     });
 
-    await newUser.save();
+    newUser.lastLoginAt = new Date();
+    const savedUser = await newUser.save();
+
+    // console.log(savedUser)
 
     // Create auth token
-    const token = generateToken(newUser.userId, newUser.role);
+    const token = await generateToken(savedUser.userId, savedUser.role);
 
     res.json({
       message: "Signup successful",
       token,
       user: {
-        userId: newUser.userId,
-        fullName: newUser.fullName,
-        email: newUser.email,
+        userId: savedUser.userId,
+        fullName: savedUser.fullName,
+        email: savedUser.email,
       },
     });
   } catch (err) {
@@ -90,7 +90,7 @@ exports.login = async (req, res) => {
     }
 
     // JWT Access Token
-    const token = generateToken(user.userId, user.role);
+    const token = await generateToken(user.userId, user.role);
 
     user.lastLoginAt = new Date();
     await user.save();
@@ -125,6 +125,12 @@ exports.changePassword = async (req, res) => {
   try {
     const { oldPassword, newPassword } = req.body;
 
+    if (!oldPassword | !newPassword) {
+      return res.status(400).json({
+        error:
+          "Old password and new password are required to change the password",
+      });
+    }
     const user = await User.findOne({ userId: req.user.userId });
 
     const isMatch = await bcrypt.compare(oldPassword, user.password);

@@ -28,15 +28,24 @@ const authRouter = require("./routes/authRoutes");
 const adminRouter = require("./routes/adminRoutes");
 const userRouter = require("./routes/userRoutes");
 
-app.use("/api/auth", authRouter);
-app.use("/api/admin/users", adminRouter);
-app.use("/api/users", userRouter);
-
 app.get("/", (req, res) => {
   res.json({
     message: `Server is running on port ${PORT || 3000}`,
   });
 });
+
+
+app.use("/api/auth", authRouter);
+app.use("/api/admin/users", adminRouter);
+app.use("/api/users", userRouter);
+
+// 404 middleware
+app.use((req, res) => {
+  res.status(404).json({
+    error: "Endpoint not exists",
+  });
+});
+
 
 app.listen(3434, () =>
   console.log(`Server is running on port ${PORT || 3000}`)

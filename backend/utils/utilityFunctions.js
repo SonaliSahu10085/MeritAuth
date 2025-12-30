@@ -1,3 +1,5 @@
+const jwt = require("jsonwebtoken");
+
 // Password strength validation
 exports.isStrongPassword = (password) => {
   const regex =
@@ -6,9 +8,9 @@ exports.isStrongPassword = (password) => {
 };
 
 // JWT access token generator
-exports.generateToken = (userId, role) => {
+exports.generateToken = async (userId, role) => {
   return jwt.sign(
-    { userId: newUser._id, role: newUser.role },
+    { userId, role },
     process.env.JWT_SECRET,
     { expiresIn: "1d" }
   );

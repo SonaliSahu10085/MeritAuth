@@ -10,7 +10,11 @@ exports.isLoggedIn = async (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = await User.findOne({ userId: decoded.id }).select("-password");
+
+    req.user = await User.findOne({ userId: decoded.userId }).select(
+      "-password"
+      );
+      
     next();
   } catch (err) {
     res.status(401).json({ message: "Invalid token" });
