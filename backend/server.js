@@ -20,7 +20,11 @@ const corsOptions = {
 };
 
 app.use(express.json({ limit: "10mb" }));
-app.use(morgan("dev"));
+
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
+}
+
 app.use(cors(corsOptions));
 
 /* -------------------- ENV VARIABLES -------------------- */
