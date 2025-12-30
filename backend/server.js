@@ -4,7 +4,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 
 const connectDB = require("./config/dbConfig");
-// const job = require("./utils/cron");
+const job = require("./utils/cron");
 
 const authRouter = require("./routes/authRoutes");
 const adminRouter = require("./routes/adminRoutes");
@@ -35,7 +35,7 @@ const DB_URL = process.env.DB_URL;
 connectDB(DB_URL);
 
 /* -------------------- CRON JOB -------------------- */
-// job.start();
+job.start();
 
 /* -------------------- ROUTES -------------------- */
 app.get("/", (req, res) => {
