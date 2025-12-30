@@ -14,7 +14,7 @@ const app = express();
 
 /* -------------------- MIDDLEWARES -------------------- */
 const corsOptions = {
-  origin: ["http://localhost:5173"],
+  origin: ["http://localhost:5173", "https://merit-auth.vercel.app" ],
   methods: ["GET", "POST", "DELETE", "PATCH"],
   credentials: true,
 };
