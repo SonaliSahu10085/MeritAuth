@@ -1,0 +1,6 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+:root {
+  --primary: #6d28d9; /* PurpleMerit Theme Color */
+}
