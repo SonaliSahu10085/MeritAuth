@@ -42,7 +42,7 @@ export default function Login({ setUser, notify }) {
 
       // ROLE-BASED REDIRECTION
       if (userData.role === "admin") {
-        navigate("/admin"); // Redirect to admin dashboard
+        navigate("/admin/dashboard"); // Redirect to admin dashboard
       } else if (userData.role === "user") {
         navigate("/profile"); // Redirect to welcome dashboard (users)
       }

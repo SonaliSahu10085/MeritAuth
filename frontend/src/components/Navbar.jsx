@@ -44,8 +44,8 @@ export default function Navbar({ user, setUser }) {
                 </li>
                 {user.role === "admin" && (
                   <li>
-                    <Link to="/admin">
-                      <ShieldCheck size={16} /> Admin
+                    <Link to="/admin/dashboard">
+                      <ShieldCheck size={16} /> Admin Dashboard
                     </Link>
                   </li>
                 )}

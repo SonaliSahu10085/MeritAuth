@@ -150,7 +150,7 @@ http://localhost:5173
 
 ## 🌐 Live Deployment Links
 
-- **Frontend:** https://meritauth.vercel.app
+- **Frontend:** https://merit-auth.vercel.app
 - **Backend API:** https://meritauth.onrender.com
 - **API Documentation:** https://documenter.getpostman.com/view/40074400/2sBXVbJDtt
 

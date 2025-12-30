@@ -38,7 +38,7 @@ export default function App() {
             } />
 
             {/* Role-Based Route: Admin Only */}
-            <Route path="/admin" element={
+            <Route path="/admin/dashboard" element={
               user?.role === 'admin' ? <AdminDashboard notify={showNotification} /> : <Navigate to="/login" />
             } />
 
