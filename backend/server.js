@@ -40,7 +40,7 @@ job.start();
 /* -------------------- ROUTES -------------------- */
 app.get("/", (req, res) => {
   res.json({
-    message: `Server is running on port ${PORT}`,
+    message: 'Welcome to Backend Server',
   });
 });
 
