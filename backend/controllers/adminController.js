@@ -1,6 +1,6 @@
 const User = require("../models/UserModel");
 
-module.exports.viewAllUsers = async (req, res) => {
+exports.viewAllUsers = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
@@ -26,13 +26,14 @@ module.exports.viewAllUsers = async (req, res) => {
   }
 };
 
-module.exports.activateUserAccounts = async (req, res) => {
+exports.updateUserStatus = async (req, res) => {
   try {
     const { userId } = req.params;
+    const { status } = req.body;
 
     const user = await User.findOneAndUpdate(
       { userId },
-      { status: "active" },
+      { status },
       { new: true }
     );
 
@@ -43,33 +44,7 @@ module.exports.activateUserAccounts = async (req, res) => {
     }
 
     res.json({
-      message: "User account activated successfully",
-    });
-  } catch (err) {
-    res.status(500).json({
-      error: err.message,
-    });
-  }
-};
-
-module.exports.deactivateUserAccounts = async (req, res) => {
-  try {
-    const { userId } = req.params;
-
-    const user = await User.findOneAndUpdate(
-      { userId },
-      { status: "inactive" },
-      { new: true }
-    );
-
-    if (!user) {
-      return res.status(404).json({
-        error: "User not found",
-      });
-    }
-
-    res.json({
-      message: "User account deactivated successfully",
+      message: `User status : ${status.toUpperCase()}`,
     });
   } catch (err) {
     res.status(500).json({
