@@ -217,21 +217,11 @@ POST /api/auth/login
 
 ---
 
-## 🧪 Testing
-
-- Backend unit tests written using **Jest**
-- Minimum **5 unit tests** covering:
-    - Authentication logic
-    - User access control
-    - Admin actions
-
----
-
 ## 🎥 Walkthrough Video
 
 📌 **Video Link:**
 
-https://your-video-link-here
+https://drive.google.com/file/d/1Yrv-PQ4cubUSEzXOvWc-v2huykJd-kMe/view?usp=sharing
 
 The video demonstrates:
 
