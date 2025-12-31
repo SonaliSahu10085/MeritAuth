@@ -124,7 +124,7 @@ export default function Login({ setUser, notify }) {
           <div className="divider">OR</div>
 
           <p className="text-center text-sm">
-            New to PurpleMerit?{" "}
+            New to MeritAuth?{" "}
             <Link to="/signup" className="link link-primary font-bold">
               Create an Account
             </Link>
