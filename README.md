@@ -16,8 +16,8 @@ This project was built as part of the **Backend Developer Intern Assessment for 
 - JWT-based authentication
 - Secure password hashing using bcrypt
 - Role-based access:
-    - **Admin:** Manage all users and their account status
-    - **User:** Manage own profile only
+  - **Admin:** Manage all users and their account status
+  - **User:** Manage own profile only
 - Protected routes for authenticated users
 - Admin-only access to admin dashboard
 
@@ -146,6 +146,7 @@ http://localhost:5173
 3. Vercel will automatically detect the Vite build settings.
 4. Add `VITE_API_URL` to the Environment Variables settings.
 5. Build & deploy.
+
 ---
 
 ## 🌐 Live Deployment Links
@@ -153,6 +154,11 @@ http://localhost:5173
 - **Frontend:** https://merit-auth.vercel.app
 - **Backend API:** https://meritauth.onrender.com
 - **API Documentation:** https://documenter.getpostman.com/view/40074400/2sBXVbJDtt
+- **Admin Credentials:**
+```bash
+email: admin@meritauth.com
+password: @Meritauth31
+```
 
 ---
 
@@ -182,7 +188,7 @@ POST /api/auth/signup
 {
   "token": "jwt_token_here",
   "user": {
-  "key": "value"
+    "key": "value"
   }
 }
 ```
@@ -197,23 +203,30 @@ POST /api/auth/login
 
 ---
 
+### Auth APIs
+
+| Method | Endpoint                        | Access |
+| ------ | ------------------------------- | ------ |
+| POST   | /api/auth/signup                | Admin / User |
+| POST   | /api/auth/login                 | Admin / User |
+| GET    | /api/auth/logout                | Admin / User |
+---
+
 ### User APIs
 
-| Method | Endpoint | Access |
-| --- | --- | --- |
-| GET | /api/users/me | User |
-| PUT | /api/users/update | User |
-| PUT | /api/users/change-password | User |
+| Method | Endpoint                  | Access |
+| ------ | ------------------------- | ------ |
+| PATCH  | /api/users/myProfile      | User   |
+| PATCH  | /api/users/changePassword | User   |
 
 ---
 
 ### Admin APIs
 
-| Method | Endpoint | Access |
-| --- | --- | --- |
-| GET | /api/admin/users | Admin |
-| PATCH | /api/admin/activate/:id | Admin |
-| PATCH | /api/admin/deactivate/:id | Admin |
+| Method | Endpoint                        | Access |
+| ------ | ------------------------------- | ------ |
+| GET    | /api/admin/users                | Admin  |
+| PATCH  | /api/admin/users/:userId/status | Admin  |
 
 ---
 
