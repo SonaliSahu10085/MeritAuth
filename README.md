@@ -210,6 +210,7 @@ POST /api/auth/login
 | POST   | /api/auth/signup                | Admin / User |
 | POST   | /api/auth/login                 | Admin / User |
 | GET    | /api/auth/logout                | Admin / User |
+| GET    | /api/auth/myProfile             | Admin / User |
 ---
 
 ### User APIs
